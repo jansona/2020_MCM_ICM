@@ -38,6 +38,8 @@ passing_data = pandas.read_csv("./2020_Problem_D_DATA/passingevents.csv")
 
 for match in range(1, 39):
 
+    print(match)
+
     ppd = passing_data.loc[:, ['TeamID', 'OriginPlayerID', 'EventOrigin_x', 'EventOrigin_y', 'MatchID']]
     ppd = ppd[ppd['TeamID'].isin(['Huskies'])][ppd['MatchID']==match]
     ppd = ppd.loc[:, ['TeamID', 'OriginPlayerID', 'EventOrigin_x', 'EventOrigin_y']]
@@ -518,13 +520,34 @@ for match in range(1, 39):
 
 
     # In[98]:
+    newMat = np.zeros((len(tf), len(tf)))
+    for i, inode in enumerate(tf):
+        for j, jnode in enumerate(tf):
+            if inode==jnode:
+                newMat[i][j] = 3 * tvd[tvd.triangle==inode].value.to_numpy()[0]
+                continue
+            qr = new_graph[new_graph['i']==inode][new_graph['j']==jnode].to_numpy()
+            if len(qr) > 0:
+                newMat[i][j] = qr[-1][-1]
 
+    new_eigenvalue, new_eigenvector = np.linalg.eig(newMat)
+    max_new_eigenvalue = max(new_eigenvalue)
+    
+    new_graph['eigenvalue'] = max_new_eigenvalue
 
     new_graph.to_csv('./results/{0}/{1}-team formation.csv'.format(base_path, match))
 
+    # newG = nx.Graph()
 
+    # for n in a:
+    #     newG.add_node(n)
+
+    # for n in b:
+    #     newG.add_node(n)
+
+    # for i, w in enumerate(weight):
+    #     newG.add_edge(a[i], b[i], weight=w)
     # # In[99]:
-
 
     # newG = nx.Graph()
 
