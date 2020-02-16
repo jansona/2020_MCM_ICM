@@ -14,9 +14,22 @@ import seaborn as sns
 
 sns.set()
 
+def get_raw_data_filtered(match_num, is_oppnent):
+    if is_oppnent:
+        player_list = list(set(fullevent_data.TeamID) - {'Huskies'})
+    else:
+        player_list = ['Huskies']
+    
+    passing_data = pd.read_csv("./2020_Problem_D_DATA/passingevents.csv")
+    PPD = passing_data.loc[:, ['MatchID', 'TeamID', 'OriginPlayerID', 'DestinationPlayerID', 'EventTime', 'EventOrigin_x', 'EventOrigin_y', 'EventDestination_x', 'EventDestination_y']]
+    PPD = PPD[PPD['MatchID']==match_num][PPD['TeamID'].isin(player_list)]
+
+    return PPD
+
+
 fullevent_data = pd.read_csv("./2020_Problem_D_DATA/fullevents.csv")
 
-base_path = './results/task2/{}{}'
+base_path = './results/task3/new_task_3/{}{}'
 
 match_ids = []
 avgs = []
@@ -124,15 +137,12 @@ for match in range(1, 39):
 
     time_points.append(pfed.iloc[points[-1]].EventTime)
 
-    num_types = []
-    num_types_op = []
+    nums_dist_shift = []
+    nums_dist_shift_op = []
 
     for is_opponent in [False, True]:
 
-        if is_opponent:
-            pfed = fullevent_data[fullevent_data['MatchID']==match][fullevent_data['TeamID'].isin(list(set(fullevent_data.TeamID) - {'Huskies'}))]
-        else:
-            pfed = fullevent_data[fullevent_data['MatchID']==match][fullevent_data['TeamID'].isin(['Huskies'])]
+        PPD = get_raw_data_filtered(match, is_opponent)
 
         for i in range(len(time_points)-1):
             start_time = time_points[i]
@@ -140,53 +150,53 @@ for match in range(1, 39):
             if i == len(time_points)-2:
                 end_time += 360
 
-            sub_fed = pfed[pfed.EventTime >= start_time][pfed.EventTime < end_time]
-            types_set = set(sub_fed.EventType) | set(sub_fed.EventSubType)
+            ppd = PPD[PPD.EventTime >= start_time][PPD.EventTime < end_time]
 
-            if is_opponent:
-                num_types_op.append(len(types_set))
+            dists = [((xt-x0)**2+(yt-y0)**2)**0.5 >= 20 for x0,y0,xt,yt in zip(ppd.EventOrigin_x,ppd.EventOrigin_y,ppd.EventDestination_x,ppd.EventDestination_y)]
+
+            count = 1
+            for i in range(len(dists)-1):
+                if dists[i] != dists[i+1]:
+                    count += 1
+            if not is_opponent:
+                nums_dist_shift.append(count)
             else:
-                num_types.append(len(types_set))
+                nums_dist_shift_op.append(count)
 
-    num_type_avg = np.mean(num_types)
-    num_type_avg_op = np.mean(num_types_op)
+    # num_type_avg = np.mean(num_types)
+    # num_type_avg_op = np.mean(num_types_op)
 
-    points_avg = [num_type_avg] * len(num_types)
-    points_avg_op = [num_type_avg_op] * len(num_types_op)
+    # points_avg = [num_type_avg] * len(num_types)
+    # points_avg_op = [num_type_avg_op] * len(num_types_op)
 
 
-    # plt.plot(num_types, color='black', linewidth=2, label='Huskies')
-    # plt.plot(points_avg, color='b', linewidth=1, linestyle=':', label='Average of Huskies')
-    # plt.plot(num_types_op, color='r', linewidth=2, label='Opponent')
-    # plt.plot(points_avg_op, color='g', linewidth=1, linestyle=':', label='Average of Opponent')
+    # plt.plot(nums_dist_shift, color='black', linewidth=2, label='Huskies')
+    # # plt.plot(points_avg, color='b', linewidth=1, linestyle=':', label='average of Huskies')
+    # plt.plot(nums_dist_shift_op, color='r', linewidth=2, label='Opponent')
+    # # plt.plot(points_avg_op, color='g', linewidth=1, linestyle=':', label='average of Opponent')
     # plt.legend(loc=1)
     # plt.xlabel('Quantum')
-    # plt.ylabel('Number of types')
+    # plt.ylabel('Number of Shift Passing')
     # plt.savefig(base_path.format(match, '.png'))
     # plt.cla()
 
-    temple_data = pd.DataFrame({'Huskies':num_types, 'Opponent':num_types_op, 
-        'Average of Huskies':points_avg, 'Average of Opponent':points_avg_op})
+    temple_data = pd.DataFrame({'Huskies':nums_dist_shift, 'Opponent':nums_dist_shift_op})
     sns_lp = sns.lineplot(data=temple_data)
-    sns_lp.set(xlabel='Time Quantum', ylabel='Number of Event Types')
+    sns_lp.set(xlabel='Time Quantum', ylabel='Frequency of Passing Types Shift')
     fig = sns_lp.get_figure()
     fig.savefig(base_path.format(match, '.png'))
     plt.cla()
 
-    match_ids.append(match)
-    avgs.append(num_type_avg)
-    avgs_op.append(num_type_avg_op)
-    nums_types.append(num_types)
-    nums_types_op.append(num_types_op)
+    # match_ids.append(match)
+    # avgs.append(num_type_avg)
+    # avgs_op.append(num_type_avg_op)
+    # nums_types.append(num_types)
+    # nums_types_op.append(num_types_op)
 
 
-pd.DataFrame({'MatchID':match_ids, 'Avg':avgs, 'Number of Types':nums_types,
-    'Avg Op':avgs_op, 'Number of Types Op':nums_types_op}).to_csv('./results/task2/num_types.csv')
-
-
-
+# pd.DataFrame({'MatchID':match_ids, 'Avg':avgs, 'Number of Types':nums_types,
+    # 'Avg Op':avgs_op, 'Number of Types Op':nums_types_op}).to_csv('./results/task2/num_types.csv')
 
 
 
 
-# %%
