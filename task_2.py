@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 fullevent_data = pd.read_csv("./2020_Problem_D_DATA/fullevents.csv")
 
-base_path = './results/task2/{}{}'
+base_path = './results/task2/opponent/{}{}'
 
 match_ids = []
 avgs = []
@@ -28,7 +28,7 @@ for match in range(1, 39):
 
 
     pfed = fullevent_data.loc[:, ['MatchID', 'TeamID', 'MatchPeriod', 'EventTime', 'EventType', 'EventSubType']]
-    pfed = pfed[pfed['MatchID']==match][pfed['TeamID'].isin(['Huskies'])]
+    pfed = pfed[pfed['MatchID']==match][pfed['TeamID'].isin(list(set(fullevent_data.TeamID) - {'Huskies'}))]
 
 
     # In[101]:
@@ -179,7 +179,7 @@ for match in range(1, 39):
     nums_types.append(num_types)
 
 
-pd.DataFrame({'MatchID':match_ids, 'Avg':avgs, 'Number of Types':nums_types}).to_csv('./results/task2/num_types.csv')
+pd.DataFrame({'MatchID':match_ids, 'Avg':avgs, 'Number of Types':nums_types}).to_csv('./results/task2/opponent/num_types.csv')
 
 # In[ ]:
 
