@@ -150,7 +150,6 @@ for match in range(1, 39):
 
     md.to_csv('./results/{0}/{1}-Clustering coefficient.csv'.format(base_path, match))
 
-
     # # Largest eigenvalue of the adjacency matrix
 
     # ## long
@@ -168,6 +167,7 @@ for match in range(1, 39):
 
     ppd = d0.copy() # 使用上一章的d0数据
 
+    ppd['count'] = ppd['count'] * max_count
 
     # In[28]:
 
@@ -180,8 +180,9 @@ for match in range(1, 39):
 
     # In[30]:
 
+    num_players = len(players)
 
-    mat = np.zeros((30, 30))
+    mat = np.zeros((num_players, num_players))
 
 
     # In[31]:
@@ -237,7 +238,7 @@ for match in range(1, 39):
     # In[37]:
 
 
-    S = np.zeros((30, 30))
+    S = np.zeros((num_players, num_players))
 
 
     # In[38]:
@@ -274,7 +275,8 @@ for match in range(1, 39):
     # In[87]:
 
 
-    sorted(eigenvalueL)[1]
+    # print(eigenvalueL)
+    # print(len(players))
 
 
     # In[88]:
@@ -343,7 +345,7 @@ for match in range(1, 39):
     max_ec = max(vs)
     player_with_ec = ps[vs.index(max_ec)]
 
-    dispersion_ec = np.var(vs)
+    dispersion_ec = np.std(vs)
 
     pd.DataFrame({'player':ps, 'Eigenvector centrality':vs,
         'max':max_ec, 'player with max':player_with_ec, 'dispersion':dispersion_ec}).to_csv('./results/{0}/{1}-Eigenvector centrality.csv'.format(base_path, match))
@@ -405,7 +407,6 @@ for match in range(1, 39):
 
 
     # In[55]:
-
 
     for i, t in enumerate(triangles):
         edges = list(permutations(t, 2))
