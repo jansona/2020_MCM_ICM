@@ -1,54 +1,24 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[1]:
-
-
 import numpy
 import pandas
 pd = pandas
 
-time_scales = ['long', 'medium', 'short']
+time_scales = ['long', 'medium/opponent', 'short']
 base_path = time_scales[1]
 
-
-# In[2]:
-
-
 passing_data = pandas.read_csv("./2020_Problem_D_DATA/passingevents.csv")
-
-
-# # In[3]:
-
-
-# passing_data.head()
-
-
-# # # Centroid coordinates and dispersion
-
-# # ## long
-
-# # In[4]:
-
-
-# passing_data
-
-
-# # In[5]:
+player_list = list(set(passing_data.TeamID) - {'Huskies'})
 
 for match in range(1, 39):
 
     print(match)
 
     ppd = passing_data.loc[:, ['TeamID', 'OriginPlayerID', 'EventOrigin_x', 'EventOrigin_y', 'MatchID']]
-    ppd = ppd[ppd['TeamID'].isin(['Huskies'])][ppd['MatchID']==match]
+    ppd = ppd[ppd['TeamID'].isin(player_list)][ppd['MatchID']==match]
     ppd = ppd.loc[:, ['TeamID', 'OriginPlayerID', 'EventOrigin_x', 'EventOrigin_y']]
 
     shared_ppd = ppd.copy()
-
-
-    # In[6]:
-
 
     X_mean, Y_mean = ppd[['EventOrigin_x', 'EventOrigin_y']].mean()
 
@@ -86,7 +56,7 @@ for match in range(1, 39):
 
     pure_passing_data = passing_data.loc[:, ['TeamID', 'OriginPlayerID', 'DestinationPlayerID', 'MatchID']]
     ppd = pure_passing_data
-    ppd = ppd[ppd['TeamID'].isin(['Huskies'])][ppd['MatchID']==match]
+    ppd = ppd[ppd['TeamID'].isin(list(set(ppd.TeamID) - {'Huskies'}))][ppd['MatchID']==match]
     ppd = ppd.loc[:, ['TeamID', 'OriginPlayerID', 'DestinationPlayerID']]
 
     ppd['count'] = 1

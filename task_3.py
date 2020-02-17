@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[130]:
-
-
 import numpy
 import pandas as pd
 import numpy as np
@@ -39,22 +35,12 @@ nums_types_op = []
 
 for match in range(1, 39):
     print(match)
-    # In[100]:
-
 
     pfed = fullevent_data.loc[:, ['MatchID', 'TeamID', 'MatchPeriod', 'EventTime', 'EventType', 'EventSubType']]
     pfed = pfed[pfed['MatchID']==match] # [pfed['TeamID'].isin(list(set(fullevent_data.TeamID) - {'Huskies'}))]
 
-
-    # In[101]:
-
-
     pfed = pfed.reset_index()
     pfed = pfed.loc[:, ['MatchID', 'TeamID', 'MatchPeriod', 'EventTime', 'EventType', 'EventSubType']]
-
-
-    # In[102]:
-
 
     last_1H = max(pfed[pfed['MatchPeriod']=='1H'].EventTime)
 
@@ -63,61 +49,25 @@ for match in range(1, 39):
 
     pfed = pd.concat([pfed[pfed['MatchPeriod']=='1H'], fed_2H])
 
-
-    # In[103]:
-
-
     pfed
-
-
-    # In[104]:
-
 
     points = [0]
 
-
-    # In[105]:
-
-
     points.append(min(pfed[pfed['MatchPeriod']=='2H'].index))
-
-
-    # In[106]:
-
 
     sindex = list(pfed[pfed['EventType']=='Substitution'].index)
 
     for p in sindex:
         points.append(p)
 
-
-    # In[107]:
-
-
     points.append(max(pfed.index))
-
-
-    # In[108]:
-
 
     points = list(set(points))
     points = sorted(points)
 
-
-    # In[109]:
-
-
     points
 
-
-    # In[117]:
-
-
     time_points = []
-
-
-    # In[118]:
-
 
     for i in range(len(points)-1):
         start_time = pfed.iloc[points[i]].EventTime
@@ -126,7 +76,7 @@ for match in range(1, 39):
         # time_points.append(start_time)
 
         duration = end_time - start_time
-        num_points = ceil(duration / 360)
+        num_points = ceil(duration / 120)
         if num_points <= 0:
             continue
         sub_quantum = duration / num_points
@@ -148,7 +98,7 @@ for match in range(1, 39):
             start_time = time_points[i]
             end_time = time_points[i+1]
             if i == len(time_points)-2:
-                end_time += 360
+                end_time += 120
 
             ppd = PPD[PPD.EventTime >= start_time][PPD.EventTime < end_time]
 
@@ -180,6 +130,19 @@ for match in range(1, 39):
     # plt.savefig(base_path.format(match, '.png'))
     # plt.cla()
 
+    # print(nums_dist_shift)
+
+    nums_dist_shift = list(filter(lambda x: x>1, nums_dist_shift))
+    nums_dist_shift_op = list(filter(lambda x: x>1, nums_dist_shift_op))
+
+    if len(nums_dist_shift) > len(nums_dist_shift_op):
+        for i in range(len(nums_dist_shift) - len(nums_dist_shift_op)):
+            nums_dist_shift_op.append(1)
+
+    if len(nums_dist_shift) < len(nums_dist_shift_op):
+        for i in range(len(nums_dist_shift_op) - len(nums_dist_shift)):
+            nums_dist_shift.append(1)
+
     temple_data = pd.DataFrame({'Huskies':nums_dist_shift, 'Opponent':nums_dist_shift_op})
     sns_lp = sns.lineplot(data=temple_data)
     sns_lp.set(xlabel='Time Quantum', ylabel='Frequency of Passing Types Shift')
@@ -196,7 +159,4 @@ for match in range(1, 39):
 
 # pd.DataFrame({'MatchID':match_ids, 'Avg':avgs, 'Number of Types':nums_types,
     # 'Avg Op':avgs_op, 'Number of Types Op':nums_types_op}).to_csv('./results/task2/num_types.csv')
-
-
-
 
