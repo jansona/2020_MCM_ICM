@@ -20,7 +20,7 @@ avgs_op = []
 nums_types = []
 nums_types_op = []
 
-for match in range(1, 39):
+for match in [5, 16, 25]:
     print(match)
 
     pfed = fullevent_data.loc[:, ['MatchID', 'TeamID', 'MatchPeriod', 'EventTime', 'EventType', 'EventSubType']]
@@ -61,7 +61,7 @@ for match in range(1, 39):
         # time_points.append(start_time)
 
         duration = end_time - start_time
-        num_points = ceil(duration / 120)
+        num_points = ceil(duration / 180)
         if num_points <= 0:
             continue
         sub_quantum = duration / num_points
@@ -86,7 +86,7 @@ for match in range(1, 39):
             start_time = time_points[i]
             end_time = time_points[i+1]
             if i == len(time_points)-2:
-                end_time += 120
+                end_time += 180
 
             sub_fed = pfed[pfed.EventTime >= start_time][pfed.EventTime < end_time]
             types_set = set(sub_fed.EventType) | set(sub_fed.EventSubType)
@@ -95,6 +95,9 @@ for match in range(1, 39):
                 num_types_op.append(len(types_set))
             else:
                 num_types.append(len(types_set))
+
+    pd.DataFrame({'num_types':num_types}).to_csv('./results/short/match_{}/num_types.csv'.format(match))
+    pd.DataFrame({'num_types':num_types_op}).to_csv('./results/short/opponent/match_{}/num_types.csv'.format(match))
 
     num_types = list(filter(lambda x: x>0, num_types))
     num_types_op = list(filter(lambda x: x>0, num_types_op))

@@ -33,7 +33,7 @@ avgs_op = []
 nums_types = []
 nums_types_op = []
 
-for match in range(1, 39):
+for match in [5, 16, 25]:
     print(match)
 
     pfed = fullevent_data.loc[:, ['MatchID', 'TeamID', 'MatchPeriod', 'EventTime', 'EventType', 'EventSubType']]
@@ -76,7 +76,7 @@ for match in range(1, 39):
         # time_points.append(start_time)
 
         duration = end_time - start_time
-        num_points = ceil(duration / 120)
+        num_points = ceil(duration / 180)
         if num_points <= 0:
             continue
         sub_quantum = duration / num_points
@@ -98,7 +98,7 @@ for match in range(1, 39):
             start_time = time_points[i]
             end_time = time_points[i+1]
             if i == len(time_points)-2:
-                end_time += 120
+                end_time += 180
 
             ppd = PPD[PPD.EventTime >= start_time][PPD.EventTime < end_time]
 
@@ -131,6 +131,9 @@ for match in range(1, 39):
     # plt.cla()
 
     # print(nums_dist_shift)
+
+    pd.DataFrame({'num_dist_shift':nums_dist_shift}).to_csv('./results/short/match_{}/num_dist_shift.csv'.format(match))
+    pd.DataFrame({'num_dist_shift':nums_dist_shift_op}).to_csv('./results/short/opponent/match_{}/num_dist_shift.csv'.format(match))
 
     nums_dist_shift = list(filter(lambda x: x>1, nums_dist_shift))
     nums_dist_shift_op = list(filter(lambda x: x>1, nums_dist_shift_op))
