@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+       <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+// myChart.showLoading();
+// $.get('https://echarts.apache.org/examples/data/asset/data/les-miserables.gexf', function (xml) {
+//     myChart.hideLoading();
+
+//     var graph = echarts.dataTool.gexf.parse(xml);
+//     var categories = [];
+//     for (var i = 0; i < 30; i++) {
+//         categories[i] = {
+//             name: '类目' + i
+//         };
+//     }
+//     graph.nodes.forEach(function (node) {
+//         node.itemStyle = null;
+//         node.value = node.symbolSize;
+//         node.symbolSize /= 1.5;
+//         node.label = {
+//             normal: {
+//                 show: node.symbolSize > 10
+//             }
+//         };
+//         node.category = node.attributes.modularity_class;
+//     });
+    // option = {
+    //     title: {
+    //         text: 'Les Miserables',
+    //         subtext: 'Circular layout',
+    //         top: 'bottom',
+    //         left: 'right'
+    //     },
+    //     tooltip: {},
+    //     animationDurationUpdate: 1500,
+    //     animationEasingUpdate: 'quinticInOut',
+    //     series: [
+    //         {
+    //             name: 'Les Miserables',
+    //             type: 'graph',
+    //             layout: 'circular',
+    //             circular: {
+    //                 rotateLabel: true
+    //             },
+    //             data: graph.nodes,
+    //             links: graph.links,
+    //             categories: categories,
+    //             roam: true,
+    //             label: {
+    //                 position: 'right',
+    //                 formatter: '{b}'
+    //             },
+    //             lineStyle: {
+    //                 color: 'source',
+    //                 curveness: 0.3
+    //             }
+    //         }
+    //     ]
+    // };
+
+//     myChart.setOption(option);
+// }, 'xml');;
+
+nodes = [
+{id:'Huskies_D1',name:'Huskies_D1',symbolSize:40.255092,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D10',name:'Huskies_D10',symbolSize:48.165905,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D2',name:'Huskies_D2',symbolSize:43.977985,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D3',name:'Huskies_D3',symbolSize:38.713953,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D4',name:'Huskies_D4',symbolSize:41.499962,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D5',name:'Huskies_D5',symbolSize:42.566956,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D6',name:'Huskies_D6',symbolSize:39.314771,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D7',name:'Huskies_D7',symbolSize:31.893750,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D8',name:'Huskies_D8',symbolSize:34.120346,label:{normal:{show:true}},category:3,},
+{id:'Huskies_D9',name:'Huskies_D9',symbolSize:43.942039,label:{normal:{show:true}},category:3,},
+{id:'Huskies_F1',name:'Huskies_F1',symbolSize:35.717136,label:{normal:{show:true}},category:1,},
+{id:'Huskies_F2',name:'Huskies_F2',symbolSize:37.653748,label:{normal:{show:true}},category:1,},
+{id:'Huskies_F3',name:'Huskies_F3',symbolSize:43.389707,label:{normal:{show:true}},category:1,},
+{id:'Huskies_F4',name:'Huskies_F4',symbolSize:32.642356,label:{normal:{show:true}},category:1,},
+{id:'Huskies_F5',name:'Huskies_F5',symbolSize:30.056731,label:{normal:{show:true}},category:1,},
+{id:'Huskies_F6',name:'Huskies_F6',symbolSize:31.463408,label:{normal:{show:true}},category:1,},
+{id:'Huskies_G1',name:'Huskies_G1',symbolSize:34.308500,label:{normal:{show:true}},category:0,},
+{id:'Huskies_M1',name:'Huskies_M1',symbolSize:34.395516,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M10',name:'Huskies_M10',symbolSize:35.764944,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M11',name:'Huskies_M11',symbolSize:37.974648,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M12',name:'Huskies_M12',symbolSize:37.353824,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M13',name:'Huskies_M13',symbolSize:33.122702,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M2',name:'Huskies_M2',symbolSize:44.183547,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M3',name:'Huskies_M3',symbolSize:41.626332,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M4',name:'Huskies_M4',symbolSize:38.773750,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M5',name:'Huskies_M5',symbolSize:33.889430,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M6',name:'Huskies_M6',symbolSize:38.091393,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M7',name:'Huskies_M7',symbolSize:46.404229,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M8',name:'Huskies_M8',symbolSize:37.612783,label:{normal:{show:true}},category:2,},
+{id:'Huskies_M9',name:'Huskies_M9',symbolSize:33.747269,label:{normal:{show:true}},category:2,},
+
+];
+links = [
+{id:'0',source:'Huskies_M1',target:'Huskies_F2',symbolSize: 3*9.100000,lineStyle: {width: 9.100000,curveness: 0.2},},
+{id:'1',source:'Huskies_M3',target:'Huskies_M1',symbolSize: 3*8.400000,lineStyle: {width: 8.400000,curveness: 0.2},},
+{id:'2',source:'Huskies_M1',target:'Huskies_M3',symbolSize: 3*7.150000,lineStyle: {width: 7.150000,curveness: 0.2},},
+{id:'3',source:'Huskies_D3',target:'Huskies_G1',symbolSize: 3*6.000000,lineStyle: {width: 6.000000,curveness: 0.2},},
+{id:'4',source:'Huskies_F2',target:'Huskies_M1',symbolSize: 3*5.850000,lineStyle: {width: 5.850000,curveness: 0.2},},
+{id:'5',source:'Huskies_D1',target:'Huskies_G1',symbolSize: 3*5.350000,lineStyle: {width: 5.350000,curveness: 0.2},},
+{id:'6',source:'Huskies_D1',target:'Huskies_D3',symbolSize: 3*5.250000,lineStyle: {width: 5.250000,curveness: 0.2},},
+{id:'7',source:'Huskies_D3',target:'Huskies_D1',symbolSize: 3*4.900000,lineStyle: {width: 4.900000,curveness: 0.2},},
+{id:'8',source:'Huskies_D5',target:'Huskies_F2',symbolSize: 3*4.850000,lineStyle: {width: 4.850000,curveness: 0.2},},
+{id:'9',source:'Huskies_D1',target:'Huskies_M1',symbolSize: 3*4.600000,lineStyle: {width: 4.600000,curveness: 0.2},},
+{id:'10',source:'Huskies_M3',target:'Huskies_D4',symbolSize: 3*4.400000,lineStyle: {width: 4.400000,curveness: 0.2},},
+{id:'11',source:'Huskies_M1',target:'Huskies_D1',symbolSize: 3*4.250000,lineStyle: {width: 4.250000,curveness: 0.2},},
+{id:'12',source:'Huskies_F2',target:'Huskies_D5',symbolSize: 3*4.200000,lineStyle: {width: 4.200000,curveness: 0.2},},
+{id:'13',source:'Huskies_M1',target:'Huskies_D4',symbolSize: 3*3.950000,lineStyle: {width: 3.950000,curveness: 0.2},},
+{id:'14',source:'Huskies_M1',target:'Huskies_D5',symbolSize: 3*3.950000,lineStyle: {width: 3.950000,curveness: 0.2},},
+{id:'15',source:'Huskies_M1',target:'Huskies_M6',symbolSize: 3*3.850000,lineStyle: {width: 3.850000,curveness: 0.2},},
+{id:'16',source:'Huskies_G1',target:'Huskies_F1',symbolSize: 3*3.850000,lineStyle: {width: 3.850000,curveness: 0.2},},
+{id:'17',source:'Huskies_G1',target:'Huskies_D1',symbolSize: 3*3.800000,lineStyle: {width: 3.800000,curveness: 0.2},},
+{id:'18',source:'Huskies_D5',target:'Huskies_M1',symbolSize: 3*3.750000,lineStyle: {width: 3.750000,curveness: 0.2},},
+{id:'19',source:'Huskies_M3',target:'Huskies_D1',symbolSize: 3*3.700000,lineStyle: {width: 3.700000,curveness: 0.2},},
+{id:'20',source:'Huskies_D1',target:'Huskies_D4',symbolSize: 3*3.650000,lineStyle: {width: 3.650000,curveness: 0.2},},
+{id:'21',source:'Huskies_M1',target:'Huskies_M4',symbolSize: 3*3.600000,lineStyle: {width: 3.600000,curveness: 0.2},},
+{id:'22',source:'Huskies_M4',target:'Huskies_M1',symbolSize: 3*3.550000,lineStyle: {width: 3.550000,curveness: 0.2},},
+{id:'23',source:'Huskies_M6',target:'Huskies_D5',symbolSize: 3*3.550000,lineStyle: {width: 3.550000,curveness: 0.2},},
+{id:'24',source:'Huskies_M1',target:'Huskies_D7',symbolSize: 3*3.500000,lineStyle: {width: 3.500000,curveness: 0.2},},
+{id:'25',source:'Huskies_D5',target:'Huskies_M3',symbolSize: 3*3.450000,lineStyle: {width: 3.450000,curveness: 0.2},},
+{id:'26',source:'Huskies_D5',target:'Huskies_M6',symbolSize: 3*3.350000,lineStyle: {width: 3.350000,curveness: 0.2},},
+{id:'27',source:'Huskies_M3',target:'Huskies_D5',symbolSize: 3*3.350000,lineStyle: {width: 3.350000,curveness: 0.2},},
+{id:'28',source:'Huskies_D4',target:'Huskies_F2',symbolSize: 3*3.300000,lineStyle: {width: 3.300000,curveness: 0.2},},
+{id:'29',source:'Huskies_F2',target:'Huskies_D4',symbolSize: 3*3.200000,lineStyle: {width: 3.200000,curveness: 0.2},},
+{id:'30',source:'Huskies_M1',target:'Huskies_D2',symbolSize: 3*3.150000,lineStyle: {width: 3.150000,curveness: 0.2},},
+{id:'31',source:'Huskies_D4',target:'Huskies_M3',symbolSize: 3*3.150000,lineStyle: {width: 3.150000,curveness: 0.2},},
+{id:'32',source:'Huskies_M3',target:'Huskies_F2',symbolSize: 3*3.150000,lineStyle: {width: 3.150000,curveness: 0.2},},
+{id:'33',source:'Huskies_D4',target:'Huskies_M1',symbolSize: 3*3.100000,lineStyle: {width: 3.100000,curveness: 0.2},},
+{id:'34',source:'Huskies_D2',target:'Huskies_G1',symbolSize: 3*3.100000,lineStyle: {width: 3.100000,curveness: 0.2},},
+{id:'35',source:'Huskies_D2',target:'Huskies_D1',symbolSize: 3*3.100000,lineStyle: {width: 3.100000,curveness: 0.2},},
+{id:'36',source:'Huskies_M1',target:'Huskies_D3',symbolSize: 3*3.000000,lineStyle: {width: 3.000000,curveness: 0.2},},
+{id:'37',source:'Huskies_D1',target:'Huskies_D2',symbolSize: 3*2.950000,lineStyle: {width: 2.950000,curveness: 0.2},},
+{id:'38',source:'Huskies_D3',target:'Huskies_D4',symbolSize: 3*2.950000,lineStyle: {width: 2.950000,curveness: 0.2},},
+{id:'39',source:'Huskies_F2',target:'Huskies_M6',symbolSize: 3*2.900000,lineStyle: {width: 2.900000,curveness: 0.2},},
+{id:'40',source:'Huskies_F2',target:'Huskies_M3',symbolSize: 3*2.900000,lineStyle: {width: 2.900000,curveness: 0.2},},
+{id:'41',source:'Huskies_D1',target:'Huskies_D5',symbolSize: 3*2.850000,lineStyle: {width: 2.850000,curveness: 0.2},},
+{id:'42',source:'Huskies_D4',target:'Huskies_D1',symbolSize: 3*2.850000,lineStyle: {width: 2.850000,curveness: 0.2},},
+{id:'43',source:'Huskies_M3',target:'Huskies_D3',symbolSize: 3*2.800000,lineStyle: {width: 2.800000,curveness: 0.2},},
+{id:'44',source:'Huskies_F2',target:'Huskies_D3',symbolSize: 3*2.800000,lineStyle: {width: 2.800000,curveness: 0.2},},
+{id:'45',source:'Huskies_D2',target:'Huskies_F2',symbolSize: 3*2.800000,lineStyle: {width: 2.800000,curveness: 0.2},},
+{id:'46',source:'Huskies_F2',target:'Huskies_D1',symbolSize: 3*2.750000,lineStyle: {width: 2.750000,curveness: 0.2},},
+{id:'47',source:'Huskies_D3',target:'Huskies_M3',symbolSize: 3*2.700000,lineStyle: {width: 2.700000,curveness: 0.2},},
+{id:'48',source:'Huskies_M6',target:'Huskies_M1',symbolSize: 3*2.700000,lineStyle: {width: 2.700000,curveness: 0.2},},
+{id:'49',source:'Huskies_M1',target:'Huskies_D6',symbolSize: 3*2.700000,lineStyle: {width: 2.700000,curveness: 0.2},},
+{id:'50',source:'Huskies_D2',target:'Huskies_D6',symbolSize: 3*2.600000,lineStyle: {width: 2.600000,curveness: 0.2},},
+{id:'51',source:'Huskies_M6',target:'Huskies_F2',symbolSize: 3*2.600000,lineStyle: {width: 2.600000,curveness: 0.2},},
+{id:'52',source:'Huskies_D1',target:'Huskies_M3',symbolSize: 3*2.550000,lineStyle: {width: 2.550000,curveness: 0.2},},
+{id:'53',source:'Huskies_F2',target:'Huskies_M4',symbolSize: 3*2.500000,lineStyle: {width: 2.500000,curveness: 0.2},},
+{id:'54',source:'Huskies_M4',target:'Huskies_F2',symbolSize: 3*2.500000,lineStyle: {width: 2.500000,curveness: 0.2},},
+{id:'55',source:'Huskies_M6',target:'Huskies_D4',symbolSize: 3*2.500000,lineStyle: {width: 2.500000,curveness: 0.2},},
+{id:'56',source:'Huskies_D3',target:'Huskies_F2',symbolSize: 3*2.500000,lineStyle: {width: 2.500000,curveness: 0.2},},
+{id:'57',source:'Huskies_D2',target:'Huskies_D3',symbolSize: 3*2.450000,lineStyle: {width: 2.450000,curveness: 0.2},},
+{id:'58',source:'Huskies_D8',target:'Huskies_F6',symbolSize: 3*2.450000,lineStyle: {width: 2.450000,curveness: 0.2},},
+{id:'59',source:'Huskies_D7',target:'Huskies_M1',symbolSize: 3*2.450000,lineStyle: {width: 2.450000,curveness: 0.2},},
+{id:'60',source:'Huskies_D1',target:'Huskies_F2',symbolSize: 3*2.450000,lineStyle: {width: 2.450000,curveness: 0.2},},
+{id:'61',source:'Huskies_G1',target:'Huskies_D3',symbolSize: 3*2.450000,lineStyle: {width: 2.450000,curveness: 0.2},},
+{id:'62',source:'Huskies_D3',target:'Huskies_M1',symbolSize: 3*2.350000,lineStyle: {width: 2.350000,curveness: 0.2},},
+{id:'63',source:'Huskies_D2',target:'Huskies_D5',symbolSize: 3*2.350000,lineStyle: {width: 2.350000,curveness: 0.2},},
+{id:'64',source:'Huskies_M3',target:'Huskies_D2',symbolSize: 3*2.300000,lineStyle: {width: 2.300000,curveness: 0.2},},
+{id:'65',source:'Huskies_D2',target:'Huskies_M1',symbolSize: 3*2.300000,lineStyle: {width: 2.300000,curveness: 0.2},},
+{id:'66',source:'Huskies_M1',target:'Huskies_D8',symbolSize: 3*2.300000,lineStyle: {width: 2.300000,curveness: 0.2},},
+{id:'67',source:'Huskies_M3',target:'Huskies_D7',symbolSize: 3*2.200000,lineStyle: {width: 2.200000,curveness: 0.2},},
+{id:'68',source:'Huskies_M3',target:'Huskies_M6',symbolSize: 3*2.200000,lineStyle: {width: 2.200000,curveness: 0.2},},
+{id:'69',source:'Huskies_D2',target:'Huskies_M3',symbolSize: 3*2.200000,lineStyle: {width: 2.200000,curveness: 0.2},},
+{id:'70',source:'Huskies_D6',target:'Huskies_G1',symbolSize: 3*2.150000,lineStyle: {width: 2.150000,curveness: 0.2},},
+{id:'71',source:'Huskies_D5',target:'Huskies_F1',symbolSize: 3*2.100000,lineStyle: {width: 2.100000,curveness: 0.2},},
+{id:'72',source:'Huskies_D8',target:'Huskies_D3',symbolSize: 3*2.100000,lineStyle: {width: 2.100000,curveness: 0.2},},
+{id:'73',source:'Huskies_D3',target:'Huskies_D8',symbolSize: 3*2.100000,lineStyle: {width: 2.100000,curveness: 0.2},},
+{id:'74',source:'Huskies_M4',target:'Huskies_D7',symbolSize: 3*2.050000,lineStyle: {width: 2.050000,curveness: 0.2},},
+{id:'75',source:'Huskies_F2',target:'Huskies_D6',symbolSize: 3*2.050000,lineStyle: {width: 2.050000,curveness: 0.2},},
+{id:'76',source:'Huskies_F2',target:'Huskies_D8',symbolSize: 3*2.050000,lineStyle: {width: 2.050000,curveness: 0.2},},
+{id:'77',source:'Huskies_M6',target:'Huskies_F1',symbolSize: 3*2.000000,lineStyle: {width: 2.000000,curveness: 0.2},},
+{id:'78',source:'Huskies_D5',target:'Huskies_D2',symbolSize: 3*2.000000,lineStyle: {width: 2.000000,curveness: 0.2},},
+{id:'79',source:'Huskies_D2',target:'Huskies_D4',symbolSize: 3*1.950000,lineStyle: {width: 1.950000,curveness: 0.2},},
+{id:'80',source:'Huskies_D7',target:'Huskies_M8',symbolSize: 3*1.950000,lineStyle: {width: 1.950000,curveness: 0.2},},
+{id:'81',source:'Huskies_F6',target:'Huskies_D8',symbolSize: 3*1.850000,lineStyle: {width: 1.850000,curveness: 0.2},},
+{id:'82',source:'Huskies_D7',target:'Huskies_F1',symbolSize: 3*1.800000,lineStyle: {width: 1.800000,curveness: 0.2},},
+{id:'83',source:'Huskies_M1',target:'Huskies_F4',symbolSize: 3*1.800000,lineStyle: {width: 1.800000,curveness: 0.2},},
+{id:'84',source:'Huskies_D5',target:'Huskies_D1',symbolSize: 3*1.800000,lineStyle: {width: 1.800000,curveness: 0.2},},
+{id:'85',source:'Huskies_D4',target:'Huskies_D3',symbolSize: 3*1.750000,lineStyle: {width: 1.750000,curveness: 0.2},},
+{id:'86',source:'Huskies_D3',target:'Huskies_D2',symbolSize: 3*1.750000,lineStyle: {width: 1.750000,curveness: 0.2},},
+{id:'87',source:'Huskies_M1',target:'Huskies_F1',symbolSize: 3*1.700000,lineStyle: {width: 1.700000,curveness: 0.2},},
+{id:'88',source:'Huskies_M4',target:'Huskies_M6',symbolSize: 3*1.700000,lineStyle: {width: 1.700000,curveness: 0.2},},
+{id:'89',source:'Huskies_D1',target:'Huskies_D7',symbolSize: 3*1.700000,lineStyle: {width: 1.700000,curveness: 0.2},},
+{id:'90',source:'Huskies_D6',target:'Huskies_D2',symbolSize: 3*1.700000,lineStyle: {width: 1.700000,curveness: 0.2},},
+{id:'91',source:'Huskies_F2',target:'Huskies_D2',symbolSize: 3*1.650000,lineStyle: {width: 1.650000,curveness: 0.2},},
+{id:'92',source:'Huskies_D4',target:'Huskies_F5',symbolSize: 3*1.650000,lineStyle: {width: 1.650000,curveness: 0.2},},
+{id:'93',source:'Huskies_D4',target:'Huskies_M4',symbolSize: 3*1.650000,lineStyle: {width: 1.650000,curveness: 0.2},},
+{id:'94',source:'Huskies_F2',target:'Huskies_D7',symbolSize: 3*1.600000,lineStyle: {width: 1.600000,curveness: 0.2},},
+{id:'95',source:'Huskies_D7',target:'Huskies_M4',symbolSize: 3*1.600000,lineStyle: {width: 1.600000,curveness: 0.2},},
+{id:'96',source:'Huskies_D6',target:'Huskies_M1',symbolSize: 3*1.600000,lineStyle: {width: 1.600000,curveness: 0.2},},
+{id:'97',source:'Huskies_M8',target:'Huskies_D7',symbolSize: 3*1.550000,lineStyle: {width: 1.550000,curveness: 0.2},},
+{id:'98',source:'Huskies_M1',target:'Huskies_F6',symbolSize: 3*1.550000,lineStyle: {width: 1.550000,curveness: 0.2},},
+{id:'99',source:'Huskies_D7',target:'Huskies_G1',symbolSize: 3*1.550000,lineStyle: {width: 1.550000,curveness: 0.2},},
+{id:'100',source:'Huskies_F1',target:'Huskies_M1',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'101',source:'Huskies_F2',target:'Huskies_F1',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'102',source:'Huskies_M4',target:'Huskies_D1',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'103',source:'Huskies_D6',target:'Huskies_M3',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'104',source:'Huskies_D3',target:'Huskies_M4',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'105',source:'Huskies_D4',target:'Huskies_M6',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'106',source:'Huskies_D4',target:'Huskies_D2',symbolSize: 3*1.500000,lineStyle: {width: 1.500000,curveness: 0.2},},
+{id:'107',source:'Huskies_G1',target:'Huskies_D2',symbolSize: 3*1.450000,lineStyle: {width: 1.450000,curveness: 0.2},},
+{id:'108',source:'Huskies_D5',target:'Huskies_M4',symbolSize: 3*1.450000,lineStyle: {width: 1.450000,curveness: 0.2},},
+{id:'109',source:'Huskies_D7',target:'Huskies_F2',symbolSize: 3*1.450000,lineStyle: {width: 1.450000,curveness: 0.2},},
+{id:'110',source:'Huskies_M6',target:'Huskies_M3',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'111',source:'Huskies_D8',target:'Huskies_M4',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'112',source:'Huskies_D6',target:'Huskies_F1',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'113',source:'Huskies_M3',target:'Huskies_D6',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'114',source:'Huskies_D6',target:'Huskies_F2',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'115',source:'Huskies_M3',target:'Huskies_M12',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'116',source:'Huskies_M4',target:'Huskies_D4',symbolSize: 3*1.400000,lineStyle: {width: 1.400000,curveness: 0.2},},
+{id:'117',source:'Huskies_G1',target:'Huskies_D6',symbolSize: 3*1.350000,lineStyle: {width: 1.350000,curveness: 0.2},},
+{id:'118',source:'Huskies_D5',target:'Huskies_G1',symbolSize: 3*1.350000,lineStyle: {width: 1.350000,curveness: 0.2},},
+{id:'119',source:'Huskies_F1',target:'Huskies_M6',symbolSize: 3*1.350000,lineStyle: {width: 1.350000,curveness: 0.2},},
+{id:'120',source:'Huskies_F1',target:'Huskies_F2',symbolSize: 3*1.350000,lineStyle: {width: 1.350000,curveness: 0.2},},
+{id:'121',source:'Huskies_D5',target:'Huskies_F4',symbolSize: 3*1.350000,lineStyle: {width: 1.350000,curveness: 0.2},},
+{id:'122',source:'Huskies_M3',target:'Huskies_M4',symbolSize: 3*1.350000,lineStyle: {width: 1.350000,curveness: 0.2},},
+{id:'123',source:'Huskies_D1',target:'Huskies_M4',symbolSize: 3*1.300000,lineStyle: {width: 1.300000,curveness: 0.2},},
+{id:'124',source:'Huskies_D2',target:'Huskies_D7',symbolSize: 3*1.300000,lineStyle: {width: 1.300000,curveness: 0.2},},
+{id:'125',source:'Huskies_M4',target:'Huskies_D2',symbolSize: 3*1.300000,lineStyle: {width: 1.300000,curveness: 0.2},},
+{id:'126',source:'Huskies_M4',target:'Huskies_M3',symbolSize: 3*1.300000,lineStyle: {width: 1.300000,curveness: 0.2},},
+{id:'127',source:'Huskies_M4',target:'Huskies_D8',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'128',source:'Huskies_D4',target:'Huskies_F1',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'129',source:'Huskies_D6',target:'Huskies_D7',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'130',source:'Huskies_D4',target:'Huskies_G1',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'131',source:'Huskies_M1',target:'Huskies_M8',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'132',source:'Huskies_D1',target:'Huskies_D6',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'133',source:'Huskies_F6',target:'Huskies_M4',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'134',source:'Huskies_D4',target:'Huskies_F4',symbolSize: 3*1.250000,lineStyle: {width: 1.250000,curveness: 0.2},},
+{id:'135',source:'Huskies_M6',target:'Huskies_F4',symbolSize: 3*1.200000,lineStyle: {width: 1.200000,curveness: 0.2},},
+{id:'136',source:'Huskies_M6',target:'Huskies_M4',symbolSize: 3*1.200000,lineStyle: {width: 1.200000,curveness: 0.2},},
+{id:'137',source:'Huskies_M12',target:'Huskies_D4',symbolSize: 3*1.200000,lineStyle: {width: 1.200000,curveness: 0.2},},
+{id:'138',source:'Huskies_G1',target:'Huskies_M1',symbolSize: 3*1.200000,lineStyle: {width: 1.200000,curveness: 0.2},},
+{id:'139',source:'Huskies_D7',target:'Huskies_D6',symbolSize: 3*1.200000,lineStyle: {width: 1.200000,curveness: 0.2},},
+{id:'140',source:'Huskies_D1',target:'Huskies_D8',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'141',source:'Huskies_F2',target:'Huskies_F6',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'142',source:'Huskies_D3',target:'Huskies_M6',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'143',source:'Huskies_D5',target:'Huskies_M12',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'144',source:'Huskies_M4',target:'Huskies_D5',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'145',source:'Huskies_D1',target:'Huskies_F1',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'146',source:'Huskies_F5',target:'Huskies_F2',symbolSize: 3*1.150000,lineStyle: {width: 1.150000,curveness: 0.2},},
+{id:'147',source:'Huskies_M12',target:'Huskies_D5',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'148',source:'Huskies_G1',target:'Huskies_D5',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'149',source:'Huskies_G1',target:'Huskies_F2',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'150',source:'Huskies_D7',target:'Huskies_F6',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'151',source:'Huskies_F1',target:'Huskies_M4',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'152',source:'Huskies_D8',target:'Huskies_M1',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'153',source:'Huskies_D2',target:'Huskies_M4',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'154',source:'Huskies_M3',target:'Huskies_D8',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'155',source:'Huskies_F6',target:'Huskies_F2',symbolSize: 3*1.100000,lineStyle: {width: 1.100000,curveness: 0.2},},
+{id:'156',source:'Huskies_D3',target:'Huskies_F1',symbolSize: 3*1.050000,lineStyle: {width: 1.050000,curveness: 0.2},},
+{id:'157',source:'Huskies_D3',target:'Huskies_F6',symbolSize: 3*1.050000,lineStyle: {width: 1.050000,curveness: 0.2},},
+{id:'158',source:'Huskies_D7',target:'Huskies_M3',symbolSize: 3*1.050000,lineStyle: {width: 1.050000,curveness: 0.2},},
+{id:'159',source:'Huskies_D1',target:'Huskies_M6',symbolSize: 3*1.050000,lineStyle: {width: 1.050000,curveness: 0.2},},
+{id:'160',source:'Huskies_M3',target:'Huskies_F1',symbolSize: 3*1.050000,lineStyle: {width: 1.050000,curveness: 0.2},},
+{id:'161',source:'Huskies_M1',target:'Huskies_G1',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'162',source:'Huskies_M4',target:'Huskies_F1',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'163',source:'Huskies_D4',target:'Huskies_F6',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'164',source:'Huskies_F4',target:'Huskies_M6',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'165',source:'Huskies_M1',target:'Huskies_M12',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'166',source:'Huskies_M6',target:'Huskies_D7',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'167',source:'Huskies_F5',target:'Huskies_D4',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'168',source:'Huskies_M8',target:'Huskies_M1',symbolSize: 3*1.000000,lineStyle: {width: 1.000000,curveness: 0.2},},
+{id:'169',source:'Huskies_D1',target:'Huskies_F5',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'170',source:'Huskies_G1',target:'Huskies_M3',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'171',source:'Huskies_F6',target:'Huskies_M1',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'172',source:'Huskies_D8',target:'Huskies_F2',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'173',source:'Huskies_D6',target:'Huskies_M4',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'174',source:'Huskies_D4',target:'Huskies_M12',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'175',source:'Huskies_D1',target:'Huskies_F4',symbolSize: 3*0.950000,lineStyle: {width: 0.950000,curveness: 0.2},},
+{id:'176',source:'Huskies_F6',target:'Huskies_F5',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'177',source:'Huskies_M8',target:'Huskies_F2',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'178',source:'Huskies_D8',target:'Huskies_F5',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'179',source:'Huskies_G1',target:'Huskies_D7',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'180',source:'Huskies_F1',target:'Huskies_D4',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'181',source:'Huskies_M4',target:'Huskies_D3',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'182',source:'Huskies_D7',target:'Huskies_M6',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'183',source:'Huskies_D7',target:'Huskies_D1',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'184',source:'Huskies_D3',target:'Huskies_D7',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'185',source:'Huskies_D1',target:'Huskies_F6',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'186',source:'Huskies_F2',target:'Huskies_M12',symbolSize: 3*0.900000,lineStyle: {width: 0.900000,curveness: 0.2},},
+{id:'187',source:'Huskies_D7',target:'Huskies_D2',symbolSize: 3*0.850000,lineStyle: {width: 0.850000,curveness: 0.2},},
+{id:'188',source:'Huskies_F1',target:'Huskies_D5',symbolSize: 3*0.850000,lineStyle: {width: 0.850000,curveness: 0.2},},
+{id:'189',source:'Huskies_F5',target:'Huskies_F6',symbolSize: 3*0.850000,lineStyle: {width: 0.850000,curveness: 0.2},},
+{id:'190',source:'Huskies_D7',target:'Huskies_F4',symbolSize: 3*0.800000,lineStyle: {width: 0.800000,curveness: 0.2},},
+{id:'191',source:'Huskies_F5',target:'Huskies_M6',symbolSize: 3*0.800000,lineStyle: {width: 0.800000,curveness: 0.2},},
+{id:'192',source:'Huskies_M6',target:'Huskies_D1',symbolSize: 3*0.800000,lineStyle: {width: 0.800000,curveness: 0.2},},
+{id:'193',source:'Huskies_F6',target:'Huskies_F4',symbolSize: 3*0.800000,lineStyle: {width: 0.800000,curveness: 0.2},},
+{id:'194',source:'Huskies_M4',target:'Huskies_F6',symbolSize: 3*0.800000,lineStyle: {width: 0.800000,curveness: 0.2},},
+{id:'195',source:'Huskies_M3',target:'Huskies_F6',symbolSize: 3*0.800000,lineStyle: {width: 0.800000,curveness: 0.2},},
+{id:'196',source:'Huskies_M6',target:'Huskies_M9',symbolSize: 3*0.750000,lineStyle: {width: 0.750000,curveness: 0.2},},
+{id:'197',source:'Huskies_F4',target:'Huskies_M1',symbolSize: 3*0.750000,lineStyle: {width: 0.750000,curveness: 0.2},},
+{id:'198',source:'Huskies_F5',target:'Huskies_M4',symbolSize: 3*0.750000,lineStyle: {width: 0.750000,curveness: 0.2},},
+{id:'199',source:'Huskies_F6',target:'Huskies_D7',symbolSize: 3*0.750000,lineStyle: {width: 0.750000,curveness: 0.2},},
+{id:'200',source:'Huskies_G1',target:'Huskies_F4',symbolSize: 3*0.750000,lineStyle: {width: 0.750000,curveness: 0.2},},
+
+];
+
+option = {
+        title: {
+            text: 'Les Miserables',
+            subtext: 'Circular layout',
+            top: 'bottom',
+            left: 'right'
+        },
+        tooltip: {},
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        series: [
+            {
+                categories: [{name:'G'},{name:'F'},{name:'M'},{name:'D'},],
+                edgeSymbol: ['arrow'],
+                name: 'Les Miserables',
+                type: 'graph',
+                layout: 'circular',
+                circular: {
+                    rotateLabel: true
+                },
+                data: nodes,
+                links: links,
+                roam: true,
+                label: {
+                    position: 'right',
+                    formatter: '{b}'
+                },
+                lineStyle: {
+                    color: 'source',
+                    curveness: 0.3
+                }
+            }
+        ]
+    };
+
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
